@@ -1,0 +1,149 @@
+User
+Use minimal API
+1. Create the endpoint that accepts parameters. Endpoint could accept from 0 to 3 parameters, type string, number, string. Naming is optional.
+2. Make a request to the public `REST Countries` API using endpoint https://restcountries.com/v3.1/all
+3. Parse retrieved API response data in JSON to variable/object.
+
+ChatGPT
+To achieve what you've described, you can use a simple server framework like Express for Node.js. I'll show you a minimal example to create an endpoint that accepts parameters and makes a request to the REST Countries API.
+
+First, you need to have Node.js installed. If you haven't already, you can download it from the official site.
+
+Once you have Node.js installed, follow these steps:
+
+Create a new directory for your project and navigate to it:
+
+sh
+Copy code
+mkdir my-api
+cd my-api
+Initialize a new Node.js project and install the necessary dependencies:
+
+sh
+Copy code
+npm init -y
+npm install express axios
+Create a file named index.js. This file will contain the code for your server:
+
+sh
+Copy code
+touch index.js
+Edit index.js and add the following code:
+
+javascript
+Copy code
+const express = require('express');
+const axios = require('axios');
+
+const app = express();
+
+// The endpoint that accepts parameters (0 to 3, in order: string, number, string)
+app.get('/my-endpoint', async (req, res) => {
+  // Parameters
+  const param1 = req.query.param1 || null;
+  const param2 = req.query.param2 || null;
+  const param3 = req.query.param3 || null;
+
+  try {
+    // Make a request to the REST Countries API
+    const response = await axios.get('https://restcountries.com/v3.1/all');
+
+    // Parse retrieved API response data to variable
+    const countries = response.data;
+
+    // You can do something with the parameters and countries data here
+    // For this example, just send the countries data as response
+    res.json(countries);
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error retrieving countries data');
+  }
+});
+
+// Start the server
+const port = 3000;
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
+});
+Run your server:
+
+sh
+Copy code
+node index.js
+Your server should be running at http://localhost:3000. You can now make requests to your endpoint by visiting http://localhost:3000/my-endpoint in your browser or using a tool like Postman. Optionally, you can also pass query parameters like http://localhost:3000/my-endpoint?param1=hello&param2=123&param3=world.
+
+Remember this is a very basic example meant for educational purposes. If you are planning to use this code in a production environment, there are many additional considerations, such as error handling, security, and optimizations that you need to take into account.
+
+
+
+
+
+User
+Use minimal API ASP.net 
+1. Create the endpoint that accepts parameters. Endpoint could accept from 0 to 3 parameters, type string, number, string. Naming is optional.
+2. Make a request to the public `REST Countries` API using endpoint https://restcountries.com/v3.1/all
+3. Parse retrieved API response data in JSON to variable/object.
+ChatGPT
+In order to create a minimal API using ASP.NET Core, you'll need to have the .NET SDK installed on your machine. After you have installed the .NET SDK, you can create a minimal web API using the following steps:
+
+Create a new Web API project.
+
+sh
+Copy code
+dotnet new web -n MyMinimalApi
+cd MyMinimalApi
+Open the Program.cs file, which is the main file for the project, and replace its content with the following code:
+
+csharp
+Copy code
+using System;
+using System.Net.Http;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the DI container.
+builder.Services.AddHttpClient();
+
+var app = builder.Build();
+
+// Middleware for handling endpoints
+app.MapGet("/my-endpoint", async (IHttpClientFactory clientFactory, HttpContext httpContext) =>
+{
+    // Read the query parameters (optional)
+    var param1 = httpContext.Request.Query["param1"].ToString();
+    var param2 = httpContext.Request.Query["param2"].ToString();
+    var param3 = httpContext.Request.Query["param3"].ToString();
+
+    // Make a request to the REST Countries API
+    var client = clientFactory.CreateClient();
+    var response = await client.GetAsync("https://restcountries.com/v3.1/all");
+
+    if (response.IsSuccessStatusCode)
+    {
+        var content = await response.Content.ReadAsStringAsync();
+
+        // Response in JSON format
+        httpContext.Response.ContentType = "application/json";
+        await httpContext.Response.WriteAsync(content);
+    }
+    else
+    {
+        httpContext.Response.StatusCode = 500;
+        await httpContext.Response.WriteAsync("Error retrieving countries data");
+    }
+});
+
+app.Run();
+Run the project by executing the following command:
+
+sh
+Copy code
+dotnet run
+This will start a web server listening on http://localhost:5000 and https://localhost:5001. You can test your new endpoint by visiting http://localhost:5000/my-endpoint in your web browser or by using a tool like Postman. You can also pass query parameters like http://localhost:5000/my-endpoint?param1=hello&param2=123&param3=world.
+
+Keep in mind that this example is for educational purposes and should not be considered production-ready. In a production environment, you would need to add additional error handling, validation, and security measures.
