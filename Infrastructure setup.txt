@@ -1,0 +1,24 @@
+what command to use in git to download repository from github
+
+ChatGPT
+To download a repository from GitHub to your local machine, you need to use the git clone command. Here's how you do it:
+
+First, navigate to the GitHub repository page that you want to clone.
+
+On the repository page, you will find a "Code" button. Click on it and you will see a URL, which is the link to the repository. Copy this URL.
+
+Open a terminal on your local machine.
+
+Navigate to the directory where you want to store the repository.
+
+Type the following command and replace <URL> with the URL you copied from the GitHub repository page:
+
+sh
+Copy code
+git clone <URL>
+For example, if you want to clone the repository at https://github.com/username/repo.git, the command would be:
+
+sh
+Copy code
+git clone https://github.com/username/repo.git
+This will create a new directory with the name of the repository, and download the contents of the repository into that directory.

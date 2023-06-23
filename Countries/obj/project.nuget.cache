@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "Ee/qsQBhqinlsSfKJaOC3zOZDqfnyYsq0P4yoleWvvCF8+IjMj2s6vePJdeUi4z9zXeGiOCzAolb+72b/O2U8Q==",
+  "success": true,
+  "projectFilePath": "C:\\work\\gpt\\CountriesGPT\\Countries\\Countries.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\vmeln3\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
+    "C:\\Users\\vmeln3\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\vmeln3\\.nuget\\packages\\swashbuckle.aspnetcore\\6.5.0\\swashbuckle.aspnetcore.6.5.0.nupkg.sha512",
+    "C:\\Users\\vmeln3\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.5.0\\swashbuckle.aspnetcore.swagger.6.5.0.nupkg.sha512",
+    "C:\\Users\\vmeln3\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.5.0\\swashbuckle.aspnetcore.swaggergen.6.5.0.nupkg.sha512",
+    "C:\\Users\\vmeln3\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.5.0\\swashbuckle.aspnetcore.swaggerui.6.5.0.nupkg.sha512"
+  ],
+  "logs": []
+}
