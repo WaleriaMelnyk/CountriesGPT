@@ -34,7 +34,7 @@ app.MapGet("/api/countries", async (HttpContext context) =>
         var content = await response.Content.ReadAsStringAsync();
 
         // Parse the JSON response into a variable/object
-        var countries = JsonSerializer.Deserialize<CountryItem>(content);
+        var countries = JsonSerializer.Deserialize<List<CountryItem>>(content);
 
         // Perform any additional processing with the retrieved data
 

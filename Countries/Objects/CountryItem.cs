@@ -2,16 +2,15 @@
 {
     public class CountryItem
     {
-        public Name Name { get; set; }
-        public string[] Capital { get; set; }
-        public int Population { get; set; }
-        public bool Independent { get; set; }
-        public int Area { get; set; }
+        public Name name { get; set; }
+        public string[] capital { get; set; }
+        public int population { get; set; }
+        public bool independent { get; set; }
     }
 
     public class Name
     {
-        public string Common { get; set; }
-        public string Official { get; set; }
+        public string common { get; set; }
+        public string official { get; set; }
     }
 }
