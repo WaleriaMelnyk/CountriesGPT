@@ -1,9 +1,12 @@
 ﻿namespace Countries.Objects
 {
-    public class Country
+    public class CountryItem
     {
         public Name Name { get; set; }
-        public string Capital { get; set; }
+        public string[] Capital { get; set; }
+        public int Population { get; set; }
+        public bool Independent { get; set; }
+        public int Area { get; set; }
     }
 
     public class Name

@@ -1,3 +1,6 @@
+using Countries.Objects;
+using System.Text.Json;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -16,29 +19,30 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-
-// ...rest of the code
-
-if (response.IsSuccessStatusCode)
+app.MapGet("/api/countries", async (HttpContext context) =>
 {
-    var content = await response.Content.ReadAsStringAsync();
+    // Retrieve the parameters from the query string
+    string param1 = context.Request.Query["param1"].ToString();
+    string param2 = context.Request.Query["param2"].ToString();
+    string param3 = context.Request.Query["param3"].ToString();
 
-    // Deserialize the JSON string into a List of Country objects
-    var countries = System.Text.Json.JsonSerializer.Deserialize<List<Country>>(content);
+    // Make the request to the REST Countries API
+    string apiUrl = "https://restcountries.com/v3.1/all";
+    using (var httpClient = new HttpClient())
+    {
+        var response = await httpClient.GetAsync(apiUrl);
+        var content = await response.Content.ReadAsStringAsync();
 
-    // Now you can work with the data as C# objects
-    // For example, let's send the names of the countries as the response
-    var countryNames = countries.Select(c => c.Name.Common);
+        // Parse the JSON response into a variable/object
+        var countries = JsonSerializer.Deserialize<CountryItem>(content);
 
-    // Send the country names as the response
-    httpContext.Response.ContentType = "application/json";
-    await httpContext.Response.WriteAsync(System.Text.Json.JsonSerializer.Serialize(countryNames));
-}
-    // ...rest of the code
+        // Perform any additional processing with the retrieved data
+
+        // Return the response as JSON
+        context.Response.ContentType = "application/json";
+        await context.Response.WriteAsync(JsonSerializer.Serialize(countries));
+    }
 });
-
-Regenerate response
-
 
 app.Run();
 
