@@ -39,10 +39,10 @@ app.MapGet("/api/countries", async (HttpContext context) =>
     }
 });
 
-app.MapGet("/api/countries/filter", async (HttpContext context) =>
+app.MapGet("/api/countries/filter/name", async (HttpContext context) =>
 {
         // Retrieve the filter string from the query string
-        string filter = context.Request.Query["filter"].ToString();
+        string filter = context.Request.Query["Nmme"].ToString();
 
         // Make the request to the REST Countries API
         string apiUrl = "https://restcountries.com/v3.1/all";
@@ -60,6 +60,35 @@ app.MapGet("/api/countries/filter", async (HttpContext context) =>
             // Return the filtered countries as JSON
             context.Response.ContentType = "application/json";
         await context.Response.WriteAsync(JsonSerializer.Serialize(filteredCountries));
+    }
+});
+
+app.MapGet("/api/countries/filter/population", async (HttpContext context) =>
+{
+        // retrieve the filter number from the query string
+        if (!int.TryParse(context.Request.Query["population"].ToString(), out int filter))
+    {
+            // handle invalid filter number
+            context.Response.StatusCode = StatusCodes.Status400BadRequest;
+        await context.Response.WriteAsync("invalid population filter value");
+        return;
+    }
+
+        // make the request to the rest countries api
+        string apiurl = "https://restcountries.com/v3.1/all";
+    using (var httpclient = new HttpClient())
+    {
+        var response = await httpclient.GetAsync(apiurl);
+        var content = await response.Content.ReadAsStringAsync();
+
+            // parse the json response into a list of country objects
+            var countries = JsonSerializer.Deserialize<List<CountryItem>>(content);
+            // filter the countries based on the population
+            var filteredcountries = countries.Where(c => c.population < (filter * 1000000)).ToList();
+
+            // return the filtered countries as json
+            context.Response.ContentType = "application/json";
+        await context.Response.WriteAsync(JsonSerializer.Serialize(filteredcountries));
     }
 });
 
