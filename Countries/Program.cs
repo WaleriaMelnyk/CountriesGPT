@@ -21,11 +21,6 @@ if (app.Environment.IsDevelopment())
 
 app.MapGet("/api/countries", async (HttpContext context) =>
 {
-    // Retrieve the parameters from the query string
-    string param1 = context.Request.Query["param1"].ToString();
-    string param2 = context.Request.Query["param2"].ToString();
-    string param3 = context.Request.Query["param3"].ToString();
-
     // Make the request to the REST Countries API
     string apiUrl = "https://restcountries.com/v3.1/all";
     using (var httpClient = new HttpClient())
@@ -41,6 +36,30 @@ app.MapGet("/api/countries", async (HttpContext context) =>
         // Return the response as JSON
         context.Response.ContentType = "application/json";
         await context.Response.WriteAsync(JsonSerializer.Serialize(countries));
+    }
+});
+
+app.MapGet("/api/countries/filter", async (HttpContext context) =>
+{
+        // Retrieve the filter string from the query string
+        string filter = context.Request.Query["filter"].ToString();
+
+        // Make the request to the REST Countries API
+        string apiUrl = "https://restcountries.com/v3.1/all";
+    using (var httpClient = new HttpClient())
+    {
+        var response = await httpClient.GetAsync(apiUrl);
+        var content = await response.Content.ReadAsStringAsync();
+
+            // Parse the JSON response into a list of country objects
+            var countries = JsonSerializer.Deserialize<List<CountryItem>>(content);
+
+            // Filter the countries based on the provided string
+            var filteredCountries = countries.Where(c => c.name.common.Contains(filter, StringComparison.OrdinalIgnoreCase)).ToList();
+
+            // Return the filtered countries as JSON
+            context.Response.ContentType = "application/json";
+        await context.Response.WriteAsync(JsonSerializer.Serialize(filteredCountries));
     }
 });
 
