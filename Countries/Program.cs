@@ -42,7 +42,7 @@ app.MapGet("/api/countries", async (HttpContext context) =>
 app.MapGet("/api/countries/filter/name", async (HttpContext context) =>
 {
         // Retrieve the filter string from the query string
-        string filter = context.Request.Query["Nmme"].ToString();
+        string filter = context.Request.Query["name"].ToString();
 
         // Make the request to the REST Countries API
         string apiUrl = "https://restcountries.com/v3.1/all";
